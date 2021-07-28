@@ -2,3 +2,25 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 /* You can add global styles to this file, and also import other style files */
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner:before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #e9c46a;
+    border-top-color: #264653;
+    animation: spinner 0.8s ease infinite;
+}

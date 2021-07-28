@@ -1,4 +1,5 @@
 export enum SocketsEvents {
     connection = 'connection',
-    message = 'msg'
+    message = 'msg',
+    identification = 'identification',
 }

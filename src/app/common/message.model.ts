@@ -1,9 +1,10 @@
-export default class Message {
-    sender: string;
+export class Message {
+    sender!: Sender ;
     content: string;
     date: Date;
+    sended: boolean;
 
-    constructor(content: string, sender: string, date?: Date) {
+    constructor(content: string, sender: Sender, date?: Date) {
         this.sender = sender;
         this.content = content;
 
@@ -12,5 +13,16 @@ export default class Message {
         }else{
             this.date = new Date(date);
         }
+
+        this.sended = false;
+    }
+}
+
+export class Sender{
+    name!: string;
+    id!: number;
+
+    constructor(){
+
     }
 }
