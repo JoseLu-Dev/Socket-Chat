@@ -8,8 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'chats',
-    pathMatch: 'full'
+    loadChildren: () => import('./home/home.module').then( m => m.HomeModule),
   },
 ];
 

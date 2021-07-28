@@ -2,7 +2,7 @@
     <!--Header-->
     <div class="flex bg-primary p-3 relative">
         <div class="absolute left-3">
-            <button>
+            <button (click)="goBack()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     class="w-6 h-6 mt-1 fill-current text-tertiary">
                     <path d="M0 0h24v24H0V0z" fill="none" opacity=".87" />
@@ -11,28 +11,33 @@
                 </svg>
             </button>
         </div>
-        <div class="mx-auto text-tertiary text-lg font-bold">Chats</div>
+        <div class="mx-auto text-tertiary text-lg font-bold">Chat</div>
     </div>
 
     <!--Chat messages-->
     <div class="flex flex-col gap-2 flex-grow rounded-b-3xl bg-primary p-4 overflow-y-auto">
         <div id="message-card" *ngFor="let msg of messages | async" class="flex-col flex-wrap gap-1"
             [ngClass]="{'mr-auto': msg.sender.id != chatService.getUserId(), 'ml-auto': msg.sender.id == chatService.getUserId()}">
-            <div class="rounded-xl p-2 flex gap-2"
+            <div class="rounded-xl p-2 flex flex-col gap-2"
                 [ngClass]="{'bg-secondary': msg.sender.id != chatService.getUserId(), 'bg-tertiary': msg.sender.id == chatService.getUserId()}">
-                <p class="text-justify">{{msg.content}}</p>
-                <div *ngIf="msg.sender.id == chatService.getUserId()">
-                    <div *ngIf="!msg.sended; else sended" class="relative w-4 h-4 mt-2">
-                        <div class="spinner"></div>
+                <div *ngIf="msg.sender.id != chatService.getUserId()">
+                    <p class="text-blue text-sm">{{msg.sender.name}}#{{msg.sender.id}}</p>
+                </div>
+                <div class="flex">
+                    <p class="text-justify">{{msg.content}}</p>
+                    <div *ngIf="msg.sender.id == chatService.getUserId()">
+                        <div *ngIf="!msg.sended; else sended" class="relative w-4 h-4 mt-2">
+                            <div class="spinner"></div>
+                        </div>
+                        <ng-template #sended>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                                fill="#000000">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path
+                                    d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z" />
+                            </svg>
+                        </ng-template>
                     </div>
-                    <ng-template #sended>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
-                            fill="#000000">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path
-                                d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z" />
-                        </svg>
-                    </ng-template>
                 </div>
             </div>
             <p class="text-right text-xs mr-1">{{msg.date.getHours()}}:{{msg.date.getMinutes()}}</p>
@@ -42,7 +47,7 @@
     <!--Message bar-->
     <div class="p-4">
         <div class="flex gap-4 p-2 bg-tertiary rounded-2xl">
-            <input id="message-input" class="flex-grow bg-transparent text-white placeholder-primary min-w-min"
+            <input id="message-input" class="flex-grow bg-transparent text-white placeholder-primary"
                 autofocus=true placeholder="Write a message here" [(ngModel)]="message" (keyup.enter)="sendMessage()" />
             <button (click)="sendMessage()" id="send-button">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-secondary" viewBox="0 0 24 24">

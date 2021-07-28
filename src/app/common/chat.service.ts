@@ -91,4 +91,8 @@ export class ChatService {
   getUserId(): number { 
     return this.sender.id;
   }
+
+  setUserName(name: string): void{
+    this.sender.name = name;
+  }
 }
