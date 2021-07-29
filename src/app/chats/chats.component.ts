@@ -11,8 +11,15 @@ import { Location } from '@angular/common';
 })
 export class ChatsComponent {
 
+  /**
+   * String message that will be sended
+   * linked with an <input> with ngModel
+   */
   message: string = '';
 
+  /**
+   * Observable array of messages
+   */
   messages: Observable<Array<Message>>;
 
   constructor(
@@ -21,13 +28,19 @@ export class ChatsComponent {
     this.messages = this.chatService.getMessages();
   }
 
-  sendMessage() {
+  /**
+   * Sends a message using chat service
+   */
+  sendMessage(): void {
     if (!this.message) { return; }
     this.chatService.sendMessage(this.message);
     this.message = '';
   }
 
-  goBack(){
+  /**
+   * Goes one route back
+   */
+  goBack(): void {
     this.location.back();
   }
 }

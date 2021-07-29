@@ -88,10 +88,18 @@ export class ChatService {
     this.chatSocket.emit(SocketsEvents.message, message);
   }
 
+  /**
+   * @returns user id
+   */
   getUserId(): number { 
     return this.sender.id;
   }
 
+  /**
+   * Sets the user name
+   * 
+   * @param name name of the user
+   */
   setUserName(name: string): void{
     this.sender.name = name;
   }

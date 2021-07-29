@@ -9,6 +9,10 @@ import { ChatService } from '../common/chat.service';
 })
 export class HomeComponent implements OnInit {
 
+  /**
+   * Name of the user
+   * linked with an <input> with ngModel
+   */
   name: string = ''
 
   constructor(
@@ -18,7 +22,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setName() {
+  /**
+   * Sets the user name using the chat service and
+   * makes router to go to 'chats' page
+   */
+  setName(): void {
     if (!this.name) { return; }
 
     this.chatService.setUserName(this.name);
