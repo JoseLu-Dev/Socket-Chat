@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ChatService } from './../common/chat.service';
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../common/message.model';
 import { Location } from '@angular/common';
 
@@ -9,7 +9,9 @@ import { Location } from '@angular/common';
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.scss']
 })
-export class ChatsComponent {
+export class ChatsComponent implements OnInit, AfterViewChecked {
+
+  @ViewChild('chat') private chatContainer!: ElementRef;
 
   /**
    * String message that will be sended
@@ -28,6 +30,19 @@ export class ChatsComponent {
     this.messages = this.chatService.getMessages();
   }
 
+  ngOnInit(): void {
+    this.scrollChatToBottom();
+  }
+
+  /**
+   * Scrolls chat if scrollbar is near bottom
+   */
+  ngAfterViewChecked(): void {
+    const chatContainer = this.chatContainer.nativeElement;
+    const scrollPercentage =  (chatContainer.scrollHeight - chatContainer.clientHeight) - chatContainer.scrollTop;
+    if (scrollPercentage != 0 && scrollPercentage < 150) { this.scrollChatToBottom(); }
+  }
+
   /**
    * Sends a message using chat service
    */
@@ -35,6 +50,8 @@ export class ChatsComponent {
     if (!this.message) { return; }
     this.chatService.sendMessage(this.message);
     this.message = '';
+
+    this.scrollChatToBottom();
   }
 
   /**
@@ -42,5 +59,16 @@ export class ChatsComponent {
    */
   goBack(): void {
     this.location.back();
+  }
+
+  /**
+   * Scrolls chat div to bottom
+   */
+  scrollChatToBottom(): void {
+    setTimeout(() => {
+      try {
+        this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+      } catch (err) { console.log(err) }
+    })
   }
 }

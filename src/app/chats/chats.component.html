@@ -15,7 +15,7 @@
     </div>
 
     <!--Chat messages-->
-    <div class="flex flex-col gap-2 flex-grow rounded-b-3xl bg-primary p-4 overflow-y-auto">
+    <div class="flex flex-col gap-2 flex-grow rounded-b-3xl bg-primary p-4 overflow-y-auto" id="chat" #chat>
         <div id="message-card" *ngFor="let msg of messages | async" class="flex-col flex-wrap gap-1"
             [ngClass]="{'mr-auto': msg.sender.id != chatService.getUserId(), 'ml-auto': msg.sender.id == chatService.getUserId()}">
             <div class="rounded-xl p-2 flex flex-col gap-2"
