@@ -1,3 +1,4 @@
+import { Sender } from './../common/message.model';
 import { Observable } from 'rxjs';
 import { ChatService } from './../common/chat.service';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -24,10 +25,17 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
    */
   messages: Observable<Array<Message>>;
 
+
+  /**
+   * Observable array of users currently typing
+   */
+  usersTyping: Observable<Array<Sender>>;
+
   constructor(
     public chatService: ChatService,
     private location: Location) {
     this.messages = this.chatService.getMessages();
+    this.usersTyping = this.chatService.getUsersTyping();
   }
 
   ngOnInit(): void {
@@ -39,7 +47,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
    */
   ngAfterViewChecked(): void {
     const chatContainer = this.chatContainer.nativeElement;
-    const scrollPercentage =  (chatContainer.scrollHeight - chatContainer.clientHeight) - chatContainer.scrollTop;
+    const scrollPercentage = (chatContainer.scrollHeight - chatContainer.clientHeight) - chatContainer.scrollTop;
     if (scrollPercentage != 0 && scrollPercentage < 150) { this.scrollChatToBottom(); }
   }
 
@@ -70,5 +78,15 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
         this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
       } catch (err) { console.log(err) }
     })
+  }
+
+  /**
+   * Update message variable and indicates that the user is currently typing
+   * 
+   * @param msg message in chat bar linked with ngModelChange
+   */
+  onMessageChanged(msg: string): void {
+    this.message = msg;
+    this.chatService.typingMessage();
   }
 }

@@ -45,16 +45,19 @@
     </div>
 
     <!--Message bar-->
-    <div class="p-4">
+    <div class="px-4 pt-4">
         <div class="flex gap-4 p-2 bg-tertiary rounded-2xl">
-            <input id="message-input" class="flex-grow bg-transparent text-white placeholder-primary"
-                autofocus=true placeholder="Write a message here" [(ngModel)]="message" (keyup.enter)="sendMessage()" />
+            <input id="message-input" class="flex-grow bg-transparent text-white placeholder-primary" autofocus=true
+                placeholder="Write a message here" [ngModel]="message" (ngModelChange)="onMessageChanged($event)" (keyup.enter)="sendMessage()" />
             <button (click)="sendMessage()" id="send-button">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-secondary" viewBox="0 0 24 24">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                 </svg>
             </button>
+        </div>
+        <div class="h-6 animate-pulse text-sm pb-1 px-2 font-light">
+            <p>{{usersTyping | async | areTyping}}</p>
         </div>
     </div>
 </div>
