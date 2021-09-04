@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AreTypingPipe implements PipeTransform {
 
   transform(users: Array<Sender> | null, ...args: unknown[]): unknown {
-    console.log(users)
 
     if (!users || !users.length) {
       return
