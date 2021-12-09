@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "gh-pages": "ng build -- --base-href https://joselu-dev.github.io/Socket-Chat/#/ && npx angular-cli-ghpages --dir=dist",
     "test": "ng test"
   },
   "private": true,
@@ -37,6 +38,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "tailwindcss": "2.2.7",
-    "typescript": "~4.2.3"
+    "typescript": "~4.2.3",
+    "angular-cli-ghpages": "^1.0.0"
   }
 }
